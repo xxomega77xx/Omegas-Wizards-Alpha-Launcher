@@ -20901,32 +20901,31 @@ DesRAA==</Form>
 	}
 }
 $statusstrip1.Visible = $false
-
-
-$buttonStartGame_Click = {
-	function Check-Update
+function Check-Update
+{
+	$statusstrip1.Visible = $true
+	$toolstripstatuslabel1.Text = "Checking for Updates..."
+	if (Get-Process -Name java.exe)
 	{
-		$statusstrip1.Visible = $true
-		$toolstripstatuslabel1.Text = "Checking for Updates..."
-		if (Get-Process -Name java.exe)
-		{
-			Stop-Process -Name java.exe
-		}
-		$currentDesktopFilePath = (Get-ChildItem .\ | Where-Object Name -Match .exe).FullName
-		$versionUrl = "https://raw.githubusercontent.com/xxomega77xx/Omegas-Wizards-Alpha-Launcher/master/Version/Version.txt"
-		$serverExeUrl = "https://github.com/xxomega77xx/Omegas-Wizards-Alpha-Launcher/blob/master/bin/x64/OmegaWizardsAlphaLauncher.exe"
-		
-		$currentServerVersion = (Invoke-WebRequest -Uri $versionUrl).Content
-		$currentDesktopVersion = [System.Diagnostics.FileVersionInfo]::GetVersionInfo($currentDesktopFilePath)
-		
-		if ($currentServerVersion -gt $currentDesktopVersion)
-		{
-			$toolstripstatuslabel1.Text = "Update Found, Updating..."
-			Invoke-WebRequest -Uri $serverExeUrl -OutFile $currentDesktopFilePath\OmegaWizardsAlphaLauncher.exe
-			$toolstripstatuslabel1.Text = "Update Complete!"
-		}
-		
+		Stop-Process -Name java.exe
 	}
+	$currentDesktopFilePath = (Get-ChildItem .\ | Where-Object Name -Match .exe).FullName
+	$versionUrl = "https://raw.githubusercontent.com/xxomega77xx/Omegas-Wizards-Alpha-Launcher/master/Version/Version.txt"
+	$serverExeUrl = "https://github.com/xxomega77xx/Omegas-Wizards-Alpha-Launcher/blob/master/bin/x64/OmegaWizardsAlphaLauncher.exe"
+	
+	$currentServerVersion = (Invoke-WebRequest -Uri $versionUrl).Content
+	$currentDesktopVersion = [System.Diagnostics.FileVersionInfo]::GetVersionInfo($currentDesktopFilePath)
+	
+	if ($currentServerVersion -gt $currentDesktopVersion)
+	{
+		$toolstripstatuslabel1.Text = "Update Found, Updating..."
+		Invoke-WebRequest -Uri $serverExeUrl -OutFile $currentDesktopFilePath\OmegaWizardsAlphaLauncher.exe
+		$toolstripstatuslabel1.Text = "Update Complete!"
+	}
+	
+}
+Check-Update
+$buttonStartGame_Click = {
 	function Start-Game
 	{
 		$pathToJava = "C:\Program Files (x86)\Java\jre1.8.0_*\bin\java.exe"		
@@ -20962,7 +20961,7 @@ $buttonStartGame_Click = {
 			}
 		}
 	}
-	Check-Update
+	
 	Start-Game
 }
 ]]></Code>
