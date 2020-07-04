@@ -20916,8 +20916,17 @@ $formOmegasWizardsLaunche_Load={
 			if ($currentServerVersion -gt $currentDesktopVersion)
 			{
 				$toolstripstatuslabel1.Text = "Update Found, Updating..."
-				Invoke-WebRequest -Uri $serverExeUrl -OutFile $currentDesktopFilePath\OmegaWizardsAlphaLauncher.exe
-				$toolstripstatuslabel1.Text = "Update Complete!"
+				$process = Start-Process -FilePath .\updater.exe -Wait -PassThru
+				if ($process.ExitCode -eq 0)
+				{
+					$toolstripstatuslabel1.Text = "Update Complete!"
+				}
+				else
+				{
+					$toolstripstatuslabel1.Text = "Update Failed."
+					Write-Output "Update Failed with $($process.ExitCode)" | Out-File .\OmegaWizardErrorLog.log -Append
+				}
+				
 			}
 			else
 			{
@@ -20927,7 +20936,8 @@ $formOmegasWizardsLaunche_Load={
 		catch
 		{
 			$toolstripstatuslabel1.Text = "Error check logs"
-			$psitem.exception.message | Out-File .\OmegaWizardErrorLog.log
+			$psitem.exception.message | Out-File .\OmegaWizardErrorLog.log -Append
+			
 		}
 		
 		
