@@ -20906,7 +20906,7 @@ $formOmegasWizardsLaunche_Load={
 			{
 				Stop-Process -Name java.exe
 			}
-			$currentDesktopFilePath = (Get-ChildItem .\ | Where-Object Name -Match .exe).FullName
+			$currentDesktopFilePath = (Get-ChildItem .\ | Where-Object Name -Match OmegaWizardsAlphaLauncher.exe).FullName
 			$versionUrl = "https://raw.githubusercontent.com/xxomega77xx/Omegas-Wizards-Alpha-Launcher/master/Version/Version.txt"
 			$serverExeUrl = "https://github.com/xxomega77xx/Omegas-Wizards-Alpha-Launcher/blob/master/bin/x64/OmegaWizardsAlphaLauncher.exe"
 			
