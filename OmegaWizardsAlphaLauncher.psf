@@ -20910,7 +20910,7 @@ $formOmegasWizardsLaunche_Load={
 			$versionUrl = "https://raw.githubusercontent.com/xxomega77xx/Omegas-Wizards-Alpha-Launcher/master/Version/Version.txt"
 			$serverExeUrl = "https://github.com/xxomega77xx/Omegas-Wizards-Alpha-Launcher/blob/master/bin/x64/OmegaWizardsAlphaLauncher.exe"
 			
-			$currentServerVersion = (Invoke-WebRequest -Uri $versionUrl).Content
+			$currentServerVersion = New-Object -TypeName System.Version -ArgumentList $((Invoke-WebRequest -Uri $versionUrl).Content)
 			$currentDesktopVersion = [System.Diagnostics.FileVersionInfo]::GetVersionInfo($currentDesktopFilePath)
 			
 			if ($currentServerVersion -gt $currentDesktopVersion)
